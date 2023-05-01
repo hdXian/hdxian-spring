@@ -1,7 +1,12 @@
 package hdxian.hdxianspring.domain;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "member2")
 public class Member {
 
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
 

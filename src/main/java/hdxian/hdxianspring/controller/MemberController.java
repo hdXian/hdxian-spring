@@ -19,6 +19,8 @@ public class MemberController {
     @Autowired
     public MemberController(MemberService memberService) {
         this.memberService = memberService;
+        // AOP 적용된 MemberService 객체가 프록시 객체인지 확인 (classID가 다르다)
+        // System.out.println("MemberService : " + memberService.getClass());
     }
 
     @GetMapping("members/new") // 회원가입 버튼울 누르면 회원 정보 작성 폼으로 연결

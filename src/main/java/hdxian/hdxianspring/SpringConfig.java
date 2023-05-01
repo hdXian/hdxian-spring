@@ -1,36 +1,49 @@
 package hdxian.hdxianspring;
 
-import hdxian.hdxianspring.repository.JdbcMemberRepository;
-import hdxian.hdxianspring.repository.JdbcTemplateMemberRepository;
-import hdxian.hdxianspring.repository.MemberRepository;
-import hdxian.hdxianspring.repository.MemoryMemberRepository;
+import hdxian.hdxianspring.aop.TimeTraceAop;
+import hdxian.hdxianspring.repository.*;
 import hdxian.hdxianspring.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.persistence.EntityManager;
 import javax.sql.DataSource;
 
 @Configuration
 public class SpringConfig {
 
-    private final DataSource dataSource;
+//    private final DataSource dataSource;
+//    private final EntityManager em;
+
+//    public SpringConfig(DataSource dataSource, EntityManager em) {
+//        this.dataSource = dataSource;
+//        this.em = em;
+//    }
+
+    private final MemberRepository memberRepository;
 
     @Autowired
-    public SpringConfig(DataSource dataSource) {
-        this.dataSource = dataSource;
+    public SpringConfig(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
     }
 
     @Bean
     public MemberService memberService() {
-        return new MemberService(memberRepository());
+        return new MemberService(memberRepository);
     }
 
     @Bean
-    public MemberRepository memberRepository() {
-//        return new MemoryMemberRepository()
-//        return new JdbcMemberRepository(dataSource);
-        return new JdbcTemplateMemberRepository(dataSource);
+    public TimeTraceAop timeTraceAop() {
+        return new TimeTraceAop();
     }
+
+//    @Bean
+//    public MemberRepository memberRepository() {
+////        return new MemoryMemberRepository()
+////        return new JdbcMemberRepository(dataSource);
+////        return new JdbcTemplateMemberRepository(dataSource);
+////        return new JpaMemberRepository(em);
+//    }
 
 }
